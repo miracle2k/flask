@@ -42,9 +42,10 @@ class BlueprintSetupState(object):
         if subdomain is None:
             subdomain = self.blueprint.subdomain
 
-        #: The subdomain that the blueprint should be active for, `None`
+        #: The subdomain/host that the blueprint should be active for, `None`
         #: otherwise.
         self.subdomain = subdomain
+        self.host = self.options.get('host')
 
         url_prefix = self.options.get('url_prefix')
         if url_prefix is None:
@@ -67,6 +68,7 @@ class BlueprintSetupState(object):
         if self.url_prefix:
             rule = self.url_prefix + rule
         options.setdefault('subdomain', self.subdomain)
+        options.setdefault('host', self.host)
         if endpoint is None:
             endpoint = _endpoint_from_view_func(view_func)
         defaults = self.url_defaults
